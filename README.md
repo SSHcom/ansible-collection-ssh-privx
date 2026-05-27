@@ -1,0 +1,1 @@
+# nsible-collection-ssh-privx
