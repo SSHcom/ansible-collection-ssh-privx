@@ -1,5 +1,9 @@
 # SSH PrivX Ansible Collection
 
+[![CI](https://github.com/ssh/ansible-collection-ssh-privx/actions/workflows/ci.yml/badge.svg)](https://github.com/ssh/ansible-collection-ssh-privx/actions/workflows/ci.yml)
+[![QA](https://github.com/ssh/ansible-collection-ssh-privx/actions/workflows/qa.yml/badge.svg)](https://github.com/ssh/ansible-collection-ssh-privx/actions/workflows/qa.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 Provides lookup plugins and modules for retrieving secrets from PrivX Secret Vault.
 
 ## Installation
