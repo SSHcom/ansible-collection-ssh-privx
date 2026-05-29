@@ -1,0 +1,5 @@
+[lint.per-file-ignores]
+# Ansible requires imports below DOCUMENTATION/EXAMPLES/RETURN variables
+"plugins/**/*.py" = ["E402"]
+".ansible/**/plugins/**/*.py" = ["E402"]
+"**/ansible_collections/**/plugins/**/*.py" = ["E402"]

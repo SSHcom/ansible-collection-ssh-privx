@@ -1,0 +1,44 @@
+namespace: sshcom
+name: privx
+version: 1.43.0
+readme: README.md
+
+authors:
+  - SSH Communications Security
+
+description: Ansible collection for retrieving secrets from PrivX Secret Vault.
+
+license:
+  - Apache-2.0
+
+tags:
+  - privx
+  - secrets
+  - vault
+
+dependencies: {}
+
+repository: https://github.com/ssh/ansible-collection-ssh-privx
+documentation: https://github.com/ssh/ansible-collection-ssh-privx
+homepage: https://github.com/ssh/ansible-collection-ssh-privx
+issues: https://github.com/ssh/ansible-collection-ssh-privx/issues
+
+build_ignore:
+  - .git
+  - .github
+  - .kiro
+  - .collections
+  - .hypothesis
+  - .pytest_cache
+  - .gitignore
+  - conftest.py
+  - ruff.toml
+  - ansible.cfg
+  - requirements.txt
+  - test-oauth.yaml
+  - demo_window_service.yaml
+  - example-read-secret.yaml
+  - USAGE.md
+  - inventory_import_privx_dev
+  - scripts
+  - '*.tar.gz'

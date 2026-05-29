@@ -1,0 +1,15 @@
+- hosts: localhost
+  gather_facts: false
+
+  vars:
+    privx_url: https://privx.privxssh.com
+    privx_token: "{{ lookup('env','PRIVX_TOKEN') }}"
+
+  tasks:
+
+    - name: Read secret from PrivX
+      debug:
+        msg: "{{ lookup('sshcom.privx.privx_secret',
+                        'example',
+                        url=privx_url,
+                        token=privx_token) }}"

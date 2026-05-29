@@ -1,0 +1,77 @@
+name: Integration
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  privx-integration:
+    runs-on: ubuntu-latest
+    environment: privx-integration
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: ansible_collections/sshcom/privx
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible-core pyjwt cryptography
+
+      - name: Write JWT private key
+        shell: bash
+        run: |
+          umask 077
+          cat > privx_jwt.pem <<'EOF'
+          ${{ secrets.PRIVX_JWT_PRIVATE_KEY }}
+          EOF
+
+      - name: Generate JWT for PrivX
+        shell: bash
+        env:
+          PRIVX_URL: ${{ secrets.PRIVX_URL }}
+        run: |
+          TOKEN="$(python3 ./ansible_collections/sshcom/privx/scripts/make_test_jwt.py \
+            --key privx_jwt.pem \
+            --iss ansible \
+            --sub ansible-secrets \
+            --aud "${PRIVX_URL}/")"
+          echo "::add-mask::$TOKEN"
+          echo "PRIVX_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+      - name: Run integration playbooks
+        working-directory: ansible_collections/sshcom/privx
+        env:
+          ANSIBLE_COLLECTIONS_PATH: ${{ github.workspace }}
+          PRIVX_TOKEN: ${{ env.PRIVX_TOKEN }}
+          PRIVX_URL: ${{ secrets.PRIVX_URL }}
+        run: |
+          set -uo pipefail
+
+          if [ -z "${PRIVX_URL:-}" ]; then
+            echo "PRIVX_URL not set — skipping integration tests"
+            exit 0
+          fi
+
+          failures=0
+
+          while read -r file; do
+            echo "=== Running $file ==="
+            if ! ansible-playbook "$file" -vv; then
+              echo "FAILED: $file"
+              failures=$((failures + 1))
+            fi
+          done < <(find tests/integration -maxdepth 1 -type f -name '*.yml' | sort)
+
+          if [ "$failures" -ne 0 ]; then
+            echo "$failures integration test(s) failed"
+            exit 1
+          fi

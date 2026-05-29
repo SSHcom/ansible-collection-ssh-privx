@@ -1,0 +1,15 @@
+- name: Test lookup
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+    privx_url: "{{ lookup('env', 'PRIVX_URL') }}"
+    privx_token: "{{ lookup('env', 'PRIVX_TOKEN') }}"
+
+  tasks:
+    - name: Read secret from PrivX
+      ansible.builtin.debug:
+        msg: "{{ lookup('sshcom.privx.privx_secret',
+                        'example',
+                        url=privx_url,
+                        token=privx_token) }}"

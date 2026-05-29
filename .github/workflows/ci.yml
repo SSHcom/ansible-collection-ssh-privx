@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  sanity-and-unit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: ansible_collections/sshcom/privx
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible-core pytest hypothesis
+
+      - name: Run ansible sanity tests
+        working-directory: ansible_collections/sshcom/privx
+        run: |
+          ansible-test sanity --color yes
+
+      - name: Run unit tests
+        working-directory: ansible_collections/sshcom/privx
+        run: |
+          pytest -v

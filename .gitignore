@@ -1,0 +1,22 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+tests/output
+.coverage
+
+# Kiro
+.kiro/
+
+# Test import symlink (created by conftest.py)
+.collections/
+
+# Hypothesis test database
+.hypothesis/
+
+# Pytest cache
+.pytest_cache/
+
+# Collection build artifacts
+*.tar.gz
