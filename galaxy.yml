@@ -18,10 +18,10 @@ tags:
 
 dependencies: {}
 
-repository: https://github.com/ssh/ansible-collection-ssh-privx
-documentation: https://github.com/ssh/ansible-collection-ssh-privx
-homepage: https://github.com/ssh/ansible-collection-ssh-privx
-issues: https://github.com/ssh/ansible-collection-ssh-privx/issues
+repository: https://github.com/SSHcom/ansible-collection-ssh-privx
+documentation: https://github.com/SSHcom/ansible-collection-ssh-privx
+homepage: https://github.com/SSHcom/ansible-collection-ssh-privx
+issues: https://github.com/SSHcom/ansible-collection-ssh-privx/issues
 
 build_ignore:
   - .git
